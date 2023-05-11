@@ -6,12 +6,11 @@ export default async function handler(req, res) {
 
     if (videoId) {
         try {
-            const summary = await summarizeVideo(videoId);
-            res.status(200).json({ summary });
+            const { summary, translation } = await summarizeVideo(videoId);
+            res.status(200).json({ summary, translation });
         } catch (error) {
             console.log(error);
             res.status(500).json({ error: error.message });
-            //res.status(500).json({ error: error });
         }
     } else {
         res.status(400).json({ error: "Please provide a video ID" });

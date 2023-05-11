@@ -133,8 +133,9 @@ async function generateSummaryForChunks(promptChunks) {
     let cntGenerateSummary = 1;
 
     for (const chunk of promptChunks) {
-        console.log('[Summary]', cntGenerateSummary++, '/', promptChunks.length, ' Processing...')
+        console.log('[Summary]', cntGenerateSummary, '/', promptChunks.length, ' Processing...')
         const summary = await generateSummary(chunk);
+        console.log('[Summary]', cntGenerateSummary++, '/', promptChunks.length, '[summary]', summary);
         summaries.push(summary);
     }
 
@@ -153,14 +154,11 @@ async function generateSummary(prompt) {
                 },
                 {
                     role: "user",
-                    content: `Summarize this video to korean: ${prompt}`,
+                    content: `Like a professional instructor, I summarize this video in English with about 300 tokens. In addition, if it does not fit the context or is not a commonly used word, it is supplemented and summarized. Links, social media, and other content not directly related to the video are omitted.: ${prompt}`,
                 },
             ],
-            max_tokens: 100,
-            temperature: 0.5,
-            top_p: 1,
-            frequency_penalty: 0,
-            presence_penalty: 0,
+            max_tokens: 1000,
+            temperature: 0.8,
         });
         return response.data.choices[0].message.content;
     } catch (error) {
@@ -177,7 +175,6 @@ async function summarizeVideo(videoId) {
     // 프롬프트를 분할하고 각 청크에 대한 요약 생성
     const promptChunks = splitTextIntoChunks(prompt);
     const summary = await generateSummaryForChunks(promptChunks);
-    console.log("[summary]", summary);
     return summary;
 }
 

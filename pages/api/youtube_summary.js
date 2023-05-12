@@ -1,5 +1,5 @@
 // /pages/api/youtube_summary.js
-import { summarizeVideo } from "../services/youtube-summary";
+import { summarizeVideo } from "../../lib/youtube-summary";
 
 export default async function handler(req, res) {
     const videoId = req.query.videoId;

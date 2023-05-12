@@ -48,7 +48,7 @@ export default function Home() {
                 <table>
                     <thead>
                         <tr>
-                            <th>English</th>
+                            <th width='50%'>English</th>
                             <th>Korean</th>
                         </tr>
                     </thead>
